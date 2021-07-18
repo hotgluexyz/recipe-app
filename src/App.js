@@ -8,7 +8,7 @@ import { Connections } from 'hotglue-elements';
 
 // API
 import { getOutputData } from "./api";
-import { TENANT_ID, FLOW_ID } from "./variables";
+import { API_KEY, ENV_ID, TENANT_ID, FLOW_ID } from "./variables";
 
 // CSS
 import './App.css';
@@ -18,6 +18,16 @@ function App() {
   const [grid, setGrid] = React.useState();
   const [loading, setLoading] = React.useState(false);
   const [isLinked, setLinked] = React.useState(false);
+
+  React.useEffect(() => {
+    if (window.HotGlue && !window.HotGlue.hasMounted()) {
+      // Mount hotglue using variables
+      window.HotGlue.mount({
+          "api_key": API_KEY,
+          "env_id": ENV_ID
+      });
+    }
+  }, [window.HotGlue]);
 
   const refreshData = async () => {
     const data = await getOutputData();
