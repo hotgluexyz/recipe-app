@@ -8,7 +8,7 @@ import { Connections } from 'hotglue-elements';
 
 // API
 import { getOutputData } from "./api";
-import { API_KEY, ENV_ID, TENANT_ID, FLOW_ID } from "./variables";
+import { API_KEY, ENV_ID, RECIPE_ID, TENANT_ID, FLOW_ID } from "./variables";
 
 // CSS
 import './App.css';
@@ -109,18 +109,18 @@ function App() {
     <div className="container">
       <h1>hotglue Contacts recipe</h1>
       <p>
-        This is a React app showing an end-to-end sample of a hotglue-powered CRM (Salesforce, HubSpot, Pipedrive) integration that pulls <strong>Contacts</strong>.
+        This is a React app showing an end-to-end sample of a hotglue-powered integration that pulls <strong>{RECIPE_ID}</strong> data.
         Follow each step below to see a user experience.
       </p>
 
       <h2>Connect your data</h2>
-      <p>Start by connecting a CRM below! <a href="#">I don't have a CRM account.</a></p>
+      <p>Start by connecting your {RECIPE_ID} data below! <a href="#">I don't have an account.</a></p>
       <Connections tenant={TENANT_ID} onLink={handleSourceLink} />
 
       <h2>Trigger a job</h2>
       {isLinked 
-      ? <p>Now that our CRM is linked, the user can sync their data. You can also set a schedule to automatically sync new data.</p>
-      : <p>Once you link a CRM, you can sync your data!</p>}
+      ? <p>Now that our {RECIPE_ID} data is linked, the user can sync their data. You can also set a schedule to automatically sync new data.</p>
+      : <p>Once you link your {RECIPE_ID} data, you can sync it!</p>}
       <div className="button">
         <a style={{ color: '#ffffff' }} className={`btnForward ${!isLinked && "disabled"}`} onClick={startJob}>
           Sync data{loading && <Loading side={"Left"}/>}
@@ -130,7 +130,7 @@ function App() {
       <h2>Preview your data</h2>
       {grid 
       ? <FilePreview data={grid}/>
-      : <p>Once you have connected a CRM and ran a sync, data will appear here!</p>}
+      : <p>Once you connect your {RECIPE_ID} data and run a sync job, data will appear here!</p>}
     </div>
   );
 }
