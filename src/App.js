@@ -14,6 +14,8 @@ import { API_KEY, ENV_ID, RECIPE_ID, TENANT_ID, FLOW_ID } from "./variables";
 import './App.css';
 import 'hotglue-elements/dist/index.css';
 
+import hotglueLogo from './assets/hotglue-white.svg'
+
 function App() {
   const [grid, setGrid] = React.useState();
   const [loading, setLoading] = React.useState(false);
@@ -23,8 +25,8 @@ function App() {
     if (window.HotGlue && !window.HotGlue.hasMounted()) {
       // Mount hotglue using variables
       window.HotGlue.mount({
-          "api_key": API_KEY,
-          "env_id": ENV_ID
+        "api_key": API_KEY,
+        "env_id": ENV_ID
       });
     }
   }, [window.HotGlue]);
@@ -105,33 +107,124 @@ function App() {
     window.swal(`${source.label} linked`, "Woohoo! You've linked a source! Now you can sync your data.", "success")
   };
 
+  const connectionsStyleOverrides = {
+    flowContainer: {
+      padding: '0rem',
+      margin: '2rem'
+    },
+    linkedFlow: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    }
+  }
+
   return (
-    <div className="container">
-      <h1>hotglue Contacts recipe</h1>
-      <p>
-        This is a React app showing an end-to-end sample of a hotglue-powered integration that pulls <strong>{RECIPE_ID}</strong> data.
-        Follow each step below to see a user experience.
-      </p>
+    <main>
 
-      <h2>Connect your data</h2>
-      <p>Start by connecting your {RECIPE_ID} data below! <a href="#">I don't have an account.</a></p>
-      <Connections tenant={TENANT_ID} onLink={handleSourceLink} />
+      <section className='header'>
+        <div className='container'>
+          <nav>
+            <div className='container'>
+              <img src={hotglueLogo} alt='hotglue logo' />
+            </div>
+          </nav>
+          <header>
+            <div className='container'>
+              <h1>Hotglue Contacts recipe</h1>
+              <p>
+                This is an example React app showing an end-to-end sample of a hotglue-powered integration that pulls <strong>{RECIPE_ID}</strong> data.
+                Follow each step below to see a user experience.
+              </p>
+            </div>
+          </header>
+        </div>
+      </section>
 
-      <h2>Trigger a job</h2>
-      {isLinked 
-      ? <p>Now that our {RECIPE_ID} data is linked, the user can sync their data. You can also set a schedule to automatically sync new data.</p>
-      : <p>Once you link your {RECIPE_ID} data, you can sync it!</p>}
-      <div className="button">
-        <a style={{ color: '#ffffff' }} className={`btnForward ${!isLinked && "disabled"}`} onClick={startJob}>
-          Sync data{loading && <Loading side={"Left"}/>}
-        </a>
-      </div>
+      <aside>
+      </aside>
 
-      <h2>Preview your data</h2>
-      {grid 
-      ? <FilePreview data={grid}/>
-      : <p>Once you connect your {RECIPE_ID} data and run a sync job, data will appear here!</p>}
-    </div>
+      <section className='connections'>
+        <div className='container'>
+          <h2>1. Connect a source</h2>
+          <p>Start by connecting your {RECIPE_ID} data on the right. <a href="#">I don't have an account.</a></p>
+          <h3>
+            Subheading
+          </h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consectetur massa erat, et pretium augue consectetur sit amet.</p>
+          <h3>
+            Subheading
+          </h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consectetur massa erat, et pretium augue consectetur sit amet.</p>
+          <h3>
+            Subheading
+          </h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consectetur massa erat, et pretium augue consectetur sit amet.</p>
+        </div>
+      </section>
+
+      <aside className='connections'>
+        <div className='container'>
+          <Connections styleOverrides={connectionsStyleOverrides} tenant={TENANT_ID} onLink={handleSourceLink} />
+        </div>
+      </aside>
+
+      <section>
+        <div className='container'>
+          <h2>2. Trigger a job</h2>
+          {isLinked
+            ? <p>Now that our {RECIPE_ID} data is linked, the user can sync their data. You can also set a schedule to automatically sync new data.</p>
+            : <p>Once you link your {RECIPE_ID} data, you can sync it!</p>}
+          <h3>
+            Subheading
+          </h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consectetur massa erat, et pretium augue consectetur sit amet.</p>
+        </div>
+      </section>
+
+      <aside>
+        <div className='container buttonContainer'>
+          <div className="button">
+            <a style={{ marginLeft: '0', color: '#ffffff' }} className={`btnForward ${!isLinked && "disabled"}`} onClick={startJob}>
+              Sync data{loading && <Loading side={"Left"}/>}
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <section>
+        <div className='container'>
+          <h2>3. Preview your data</h2>
+          <p>The <strong>Contacts</strong> from the CRM has been synced! See a preview of the data below.</p>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consectetur massa erat, et pretium augue consectetur sit amet.</p>
+          <h3>
+            Subheading
+          </h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consectetur massa erat, et pretium augue consectetur sit amet.</p>
+          <h3>
+            Subheading
+          </h3>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consectetur massa erat, et pretium augue consectetur sit amet.</p>
+        </div>
+      </section>
+
+      <aside className='data'>
+        <div className='container'>
+          <div>
+            {grid
+              ? <FilePreview data={grid}/>
+              : <p>Once you connect your {RECIPE_ID} data and run a sync job, data will appear here!</p>}
+          </div>
+        </div>
+      </aside>
+    </main>
   );
 }
 
