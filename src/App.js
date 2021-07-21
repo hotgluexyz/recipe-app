@@ -123,29 +123,22 @@ function App() {
   return (
     <main>
 
-      <section className='header'>
+      <nav>
         <div className='container'>
-          <nav>
-            <div className='container'>
-              <img src={hotglueLogo} alt='hotglue logo' style={{
-                fill: "white"
-              }}/>
-            </div>
-          </nav>
-          <header>
-            <div className='container'>
-              <h1>{RECIPE_ID} recipe</h1>
-              <p>
-                This is a sample React app showing an end-to-end sample of a hotglue-powered integration that pulls <strong>{RECIPE_ID}</strong> data.
-                Follow each step below to see a user experience.
-              </p>
-            </div>
-          </header>
+          <img src={hotglueLogo} alt='hotglue logo' style={{
+            fill: "white"
+          }}/>
         </div>
-      </section>
-
-      <aside>
-      </aside>
+      </nav>
+      <header>
+        <div className='container'>
+          <h1>{RECIPE_ID} recipe</h1>
+          <p>
+            This is a sample React app showing an end-to-end sample of a hotglue-powered integration that pulls <strong>{RECIPE_ID}</strong> data.
+            Follow each step below to see a user experience.
+          </p>
+        </div>
+      </header>
 
       <section className='connections'>
         <div className='container'>
@@ -238,7 +231,7 @@ function App() {
     </button>
   );
 }`}/>
-        <a href="https://docs.hotglue.xyz/jobs/start" target="_blank">Read the docs</a>
+          <a href="https://docs.hotglue.xyz/jobs/start" target="_blank">Read the docs</a>
         </div>
       </section>
 
@@ -246,7 +239,7 @@ function App() {
         <div className='container buttonContainer'>
           <div className="button">
             <a style={{ marginLeft: '0', color: '#ffffff' }} className={`btnForward ${!isLinked && "disabled"}`} onClick={startJob}>
-              Sync data{loading && <Loading side={"Left"}/>}
+              {!loading ? 'Sync data' : 'Syncing'} {loading && <Loading side={"Left"}/>}
             </a>
           </div>
         </div>
@@ -256,16 +249,16 @@ function App() {
         <div className='container'>
           <h2>Preview your data</h2>
           {grid
-          ? <p>
+            ? <p>
               The <strong>{RECIPE_ID}</strong> has been synced! See a preview of the data on the right.
             </p>
-          : <>
-            <p>
-              Once users link their {RECIPE_ID} data and run a sync job, the data will be sent to your product's backend.
-            </p>
-            <p>
-              From there, use their data to power your product – try the steps above to see it in action 🚀  
-            </p>
+            : <>
+              <p>
+                Once users link their {RECIPE_ID} data and run a sync job, the data will be sent to your product's backend.
+              </p>
+              <p>
+                From there, use their data to power your product – try the steps above to see it in action 🚀  
+              </p>
             </>}
         </div>
       </section>
