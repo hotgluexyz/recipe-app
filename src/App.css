@@ -4,6 +4,7 @@ body {
 }
 
 nav {
+  grid-column: 1 / 3;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -24,6 +25,7 @@ nav img {
 }
 
 header {
+  grid-column: 1 / 3;
   padding-top: 1rem;
 
   display: flex;
@@ -57,7 +59,7 @@ section {
   padding-left: 2rem;
   padding-right: 4rem;
 
-  justify-self: flex-end;
+  justify-content: flex-end;
 }
 
 aside {
@@ -66,9 +68,9 @@ aside {
   padding-left: 2rem;
   padding-right: 2rem;
 
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: flex-start;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: space-between;
 
   max-width: 40rem;
 
