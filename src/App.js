@@ -3,6 +3,7 @@ import React from "react";
 // Components
 import FilePreview from "./components/FilePreview";
 import Loading from "./components/Loading";
+import CodeBlock from "./components/CodeBlock";
 
 import { Connections } from 'hotglue-elements';
 
@@ -14,6 +15,8 @@ import { API_KEY, ENV_ID, RECIPE_ID, TENANT_ID, FLOW_ID } from "./variables";
 import './App.css';
 import 'hotglue-elements/dist/index.css';
 
+import hotglueLogo from './assets/hotglue.svg'
+
 function App() {
   const [grid, setGrid] = React.useState();
   const [loading, setLoading] = React.useState(false);
@@ -23,8 +26,8 @@ function App() {
     if (window.HotGlue && !window.HotGlue.hasMounted()) {
       // Mount hotglue using variables
       window.HotGlue.mount({
-          "api_key": API_KEY,
-          "env_id": ENV_ID
+        "api_key": API_KEY,
+        "env_id": ENV_ID
       });
     }
   }, [window.HotGlue]);
@@ -105,33 +108,178 @@ function App() {
     window.swal(`${source.label} linked`, "Woohoo! You've linked a source! Now you can sync your data.", "success")
   };
 
+  const connectionsStyleOverrides = {
+    flowContainer: {
+      padding: '0rem',
+      margin: '2rem'
+    },
+    linkedFlow: {
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+    }
+  }
+
   return (
-    <div className="container">
-      <h1>hotglue Contacts recipe</h1>
-      <p>
-        This is a React app showing an end-to-end sample of a hotglue-powered integration that pulls <strong>{RECIPE_ID}</strong> data.
-        Follow each step below to see a user experience.
-      </p>
+    <main>
 
-      <h2>Connect your data</h2>
-      <p>Start by connecting your {RECIPE_ID} data below! <a href="#">I don't have an account.</a></p>
-      <Connections tenant={TENANT_ID} onLink={handleSourceLink} />
+      <section className='header'>
+        <div className='container'>
+          <nav>
+            <div className='container'>
+              <img src={hotglueLogo} alt='hotglue logo' style={{
+                fill: "white"
+              }}/>
+            </div>
+          </nav>
+          <header>
+            <div className='container'>
+              <h1>{RECIPE_ID} recipe</h1>
+              <p>
+                This is a sample React app showing an end-to-end sample of a hotglue-powered integration that pulls <strong>{RECIPE_ID}</strong> data.
+                Follow each step below to see a user experience.
+              </p>
+            </div>
+          </header>
+        </div>
+      </section>
 
-      <h2>Trigger a job</h2>
-      {isLinked 
-      ? <p>Now that our {RECIPE_ID} data is linked, the user can sync their data. You can also set a schedule to automatically sync new data.</p>
-      : <p>Once you link your {RECIPE_ID} data, you can sync it!</p>}
-      <div className="button">
-        <a style={{ color: '#ffffff' }} className={`btnForward ${!isLinked && "disabled"}`} onClick={startJob}>
-          Sync data{loading && <Loading side={"Left"}/>}
-        </a>
-      </div>
+      <aside>
+      </aside>
 
-      <h2>Preview your data</h2>
-      {grid 
-      ? <FilePreview data={grid}/>
-      : <p>Once you connect your {RECIPE_ID} data and run a sync job, data will appear here!</p>}
-    </div>
+      <section className='connections'>
+        <div className='container'>
+          <h2>Connect a source</h2>
+          <p style={{marginBottom: 0}}>
+            Your users will start by connecting their <strong>{RECIPE_ID}</strong> data source.
+          </p>
+          <p>
+            Try connecting a {RECIPE_ID} source on the right.
+          </p>
+          <h3>
+            Embed the hotglue widget
+          </h3>
+          <p>
+            To add hotglue to your product, start by embedding the widget.
+          </p>
+          <CodeBlock language={"html"} content={`<script src="https://hotglue.xyz/widget.js"></script>
+<script>
+    HotGlue.mount({
+        "api_key": "${API_KEY}",
+        "env_id": "${ENV_ID}"
+    });
+</script>`}/>
+          <a href="https://docs.hotglue.xyz/quickstart/embed#add-the-widget" target="_blank">Read the docs</a> 
+          <h3>
+            Create an integrations page
+          </h3>
+          <p>
+            Use the hotglue-elements package to show users all the available {RECIPE_ID} sources they can connect to – directly in your product.
+          </p>
+          <CodeBlock language={"react"} content={`import React from "react"
+import {Connections} from "hotglue-elements"
+import "hotglue-elements/dist/index.css"
+
+function App() {
+  // tenant is the id of the current user
+  return <Connections tenant="${TENANT_ID}" />
+}`}/>
+          <a href="https://docs.hotglue.xyz/quickstart/embed#react-install-hotglue-elements" target="_blank">Read the docs</a>
+        </div>
+      </section>
+
+      <aside className='connections'>
+        <div className='container'>
+          <Connections styleOverrides={connectionsStyleOverrides} tenant={TENANT_ID} onLink={handleSourceLink} />
+        </div>
+      </aside>
+
+      <section>
+        <div className='container'>
+          <h2>Trigger a job</h2>
+          {isLinked
+            ? <p>
+              Now that the user has linked their {RECIPE_ID} data, they can sync their data to your product. 
+              Try it yourself on the right.
+            </p>
+            : <p>Once users link their {RECIPE_ID} data, they can sync it directly to your platform!</p>}
+          <h3>
+            Ways to start a sync job
+          </h3>
+          <p>
+            There are several ways to allow users to sync their {RECIPE_ID} data to your product:
+            <ul>
+              <li>Use the widget to add a manual sync button to your product</li>
+              <li>Create a schedule to automatically sync new data</li>
+              <li>Use hotglue's API to trigger syncs programmatically</li>
+            </ul>
+          </p>
+          <CodeBlock language={"react"} content={`import React from "react"
+
+function App() {
+  const startJob = async () => {
+    // Make sure HotGlue is ready
+    if (!window.HotGlue || !window.HotGlue.hasMounted()) return;
+
+    // Start the job
+    window.HotGlue.createJob(FLOW_ID, TENANT_ID).then(jobDetails => {
+      // Let the user know it started
+      window.swal(
+        "Syncing data",
+        "Starting a data sync. This may take a few minutes!",
+        "success"
+      )
+    });
+  };
+
+  return (
+    <button onClick={startJob}>
+      Sync data
+    </button>
+  );
+}`}/>
+        <a href="https://docs.hotglue.xyz/jobs/start" target="_blank">Read the docs</a>
+        </div>
+      </section>
+
+      <aside>
+        <div className='container buttonContainer'>
+          <div className="button">
+            <a style={{ marginLeft: '0', color: '#ffffff' }} className={`btnForward ${!isLinked && "disabled"}`} onClick={startJob}>
+              Sync data{loading && <Loading side={"Left"}/>}
+            </a>
+          </div>
+        </div>
+      </aside>
+
+      <section>
+        <div className='container'>
+          <h2>Preview your data</h2>
+          {grid
+          ? <p>
+              The <strong>{RECIPE_ID}</strong> has been synced! See a preview of the data on the right.
+            </p>
+          : <>
+            <p>
+              Once users link their {RECIPE_ID} data and run a sync job, the data will be sent to your product's backend.
+            </p>
+            <p>
+              From there, use their data to power your product – try the steps above to see it in action 🚀  
+            </p>
+            </>}
+        </div>
+      </section>
+
+      <aside className='data'>
+        <div className='container'>
+          <div>
+            {grid
+              ? <FilePreview data={grid}/>
+              : <p>Once you connect your {RECIPE_ID} data and run a sync job, data will appear here!</p>}
+          </div>
+        </div>
+      </aside>
+    </main>
   );
 }
 

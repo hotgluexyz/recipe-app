@@ -1,0 +1,9 @@
+.button {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+}
+
+.button svg {
+    margin-left: 5px;
+}

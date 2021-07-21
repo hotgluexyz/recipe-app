@@ -9,10 +9,10 @@ import classes from './preview.styles.module.css'
 //    [row]
 //    ...
 // }
-const PreviewTable = ({data}) => {  
-  const rows = data.map((row, index) => {
+const PreviewTable = ({data}) => {
+  const rows = data.slice(0, 5 <= data.length-1 ? 5 : data.length-1).map((row, index) => {
     const headerClassName = `${index == 0 ? `${classes.row} ${classes.header}` : ''}`
-    const rowClassName = `${classes.row} ${index % 2 == 0 ? classes.evenRow : classes.oddRow}` 
+    const rowClassName = `${classes.row} ${index % 2 == 0 ? classes.evenRow : classes.oddRow}`
     const generateCellClassName = cellIndex => `${(cellIndex == 0) ? classes.firstCell : ''} ${(cellIndex == row.length-1) ? classes.lastCell : ''}`
 
     // I've added this here temporarily for the example, but you'd need to implement your own logic for what needs to be right aligned.
@@ -41,12 +41,7 @@ const PreviewTable = ({data}) => {
 
 const FilePreview = ({data}) => {
   return (
-    <React.Fragment>
-      <p className={classes.p}>The <strong>Contacts</strong> from the CRM has been synced! See a preview of the data below.</p>
-      <div style={{padding: "2rem"}}>
-        <PreviewTable data={data} />
-      </div>
-    </React.Fragment>
+    <PreviewTable data={data} />
   )
 }
 

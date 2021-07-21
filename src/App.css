@@ -1,5 +1,182 @@
+body {
+  font-family: 'Nunito', sans-serif;
+  background-color: rgb(38, 39, 50);
+}
+
+nav {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  padding-top: 1rem;
+}
+
+.header .container {
+  padding: 0;
+}
+
+nav .container {
+  width: unset;
+}
+
+nav img {
+  height: 2rem;
+}
+
+header {
+  padding-top: 1rem;
+
+  display: flex;
+  justify-content: center;
+}
+
+header .container {
+  max-width: 40rem;
+}
+
+main {
+  width: 100%;
+
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-auto-rows: auto;
+  grid-auto-flow: 'rows';
+
+  padding: 2rem 0rem;
+}
+
+section,
+aside {
+  display: flex;
+  min-width: 0;
+}
+
+section {
+  padding-top: 4rem;
+  padding-bottom: 4rem;
+  padding-left: 2rem;
+  padding-right: 4rem;
+
+  justify-self: flex-end;
+}
+
+aside {
+  padding-top: 4rem;
+  padding-bottom: 0rem;
+  padding-left: 2rem;
+  padding-right: 2rem;
+
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  max-width: 40rem;
+
+}
+
+aside .container {
+  background-color: white;
+  border-radius: 1rem;
+}
+
+aside h4 {
+  text-align: center;
+}
+
+aside p {
+  text-align: center;
+}
+
+section.connections {
+  padding-top: 2rem;
+}
+
 .container {
-  padding: 15px;
+  width: 100%;
+  overflow: visible;
+}
+
+aside.connections {
+  padding-top: 2rem;
+}
+
+aside.connections .container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+aside.connections .dividerContainer {
+  display: block;
+}
+
+aside.data {
+  display: flex;
+  justify-content: center;
+}
+
+.data .container {
+  overflow: hidden;
+}
+
+.data .container > div {
+  overflow-x: auto;
+  margin: 2rem;
+}
+
+section > .container {
+  max-width: 40rem;
+}
+
+.buttonContainer {
+  flex: 1 0 auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+aside:first-of-type {
+  background-color: unset;
+}
+
+section:first-of-type {
+  padding-top: 2rem;
+  padding-bottom: 0rem;
+}
+
+section:last-of-type,
+aside:last-of-type {
+  overflow: hidden;
+}
+
+.divider {
+  border-bottom: 0.15rem solid rgba(38, 39, 50, 0.1);
+  border-radius: 50rem;
+  margin-top: 4rem;
+  justify-self: flex-start;
+}
+
+h1 {
+  color: rgb(255, 86, 79);
+  text-align: center;
+  font-weight: 700;
+}
+
+header p {
+  text-align: center;
+}
+
+h2 {
+  color: white;
+  margin-top: 0;
+}
+
+h3 {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.container > p {
+  color: rgba(255, 255, 255, 0.8);
 }
 
 .btnForward {
@@ -13,6 +190,12 @@
 
 .disabled {
   background-color: #555a64;
+}
+
+a {
+  color: rgb(255, 86, 79);
+  font-weight: bold;
+  text-decoration: none;
 }
 
 .button a {
